@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsr6l3ds6ncjb"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_yho8y"]
+[ext_resource type="Script" path="res://services/connection_handler.gd" id="2_604ly"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_yho8y")
+
+[node name="ConnectionHandler" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_604ly")
