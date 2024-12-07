@@ -5,7 +5,6 @@ class_name Player
 const SPEED: float = 300
 const GamePhase = preload("res://shared/game_phase.gd")
 
-var phase: GamePhase.Phase = GamePhase.Phase.DAY
 var maxHp: float
 var hp: float
 var remaining_phase_time: float = 60
