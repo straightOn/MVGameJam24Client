@@ -1,4 +1,4 @@
-class_name Bug extends Enemy
+class_name Ghost extends Enemy
 
 func _ready() -> void:
 	att_base = 2

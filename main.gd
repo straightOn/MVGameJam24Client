@@ -19,6 +19,7 @@ func _ready():
 	connection_handler.object_created_event.connect(_object_created)
 	connection_handler.object_removed_event.connect(_object_removed_event)
 	
+	
 	connection_handler.receive_game_state_event.connect(_receive_game_state_event)	
 	connection_handler.receive_next_wave_event.connect(_next_wave)
 	connection_handler.receive_switch_player_phase_event.connect(_update_player_phase)
@@ -42,19 +43,19 @@ func _object_position_update(id: int, new_position: Vector2, direction: Vector2)
 		return
 	scene_elements.get(id).position = new_position
 	
-func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2):
-	print("_object_created")
+func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2):		
+
 	if (!scene_elements.has(id)):
-		var object: GameObject = null
+		var object = null
 		
 		match type:
 			ObjectTypeResource.ObjectType.Player:
-				object = player_resorce.instantiate() as GameObject
+				object = player_resorce.instantiate() as Player
 			ObjectTypeResource.ObjectType.Bug:
-				object = bug_resource.instantiate() as GameObject
+				object = bug_resource.instantiate() as BugEnemy
 			ObjectTypeResource.ObjectType.Ghost:
-				object = ghost_resource.instantiate() as GameObject
-				
+				object = ghost_resource.instantiate() as Ghost
+		
 		if object != null:
 			scene_elements[id] = object
 			scene_elements.get(id).position = initial_position

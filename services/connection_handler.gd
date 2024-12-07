@@ -69,6 +69,10 @@ func receive_object_created(id: int, type: ObjectTypeResource.ObjectType, initia
 func receive_object_removed(id: int):
 	super.receive_object_removed(id)
 	object_removed_event.emit(id)
+	
+@rpc("any_peer")
+func move_action(input: Vector2):
+	pass
 
 @rpc("any_peer")
 func receive_game_state(active_connections: int, max_connections: int):
@@ -86,21 +90,21 @@ func receive_player_takes_damage(id: int, damage: float, newHp: float, newMaxHp:
 	receive_player_takes_damage_event.emit(id, damage, newHp, newMaxHp)
 	
 @rpc("any_peer")
-func enemy_takes_damage(id: int, damage: float, newHp: float, newMaxHp: float):
+func receive_enemy_takes_damage(id: int, damage: float, newHp: float, newMaxHp: float):
 	super.receive_enemy_takes_damage(id, damage, newHp, newMaxHp)
 	receive_enemy_takes_damage_event.emit(id, damage, newHp, newMaxHp)
 	
 @rpc("any_peer")
-func switch_player_phase(id: int, phase: int):
+func receive_switch_player_phase(id: int, phase: int):
 	super.receive_switch_player_phase(id, phase)
 	receive_switch_player_phase_event.emit(id, phase)
 	
 @rpc("any_peer")
-func level_up(id: int, level: int, newHp: float, newMaxHp: float):
+func receive_level_up(id: int, level: int, newHp: float, newMaxHp: float):
 	super.receive_level_up(id, level, newHp, newMaxHp)
 	receive_level_up_event.emit(id, level, newHp, newMaxHp)
 	
 @rpc("any_peer")
-func remaining_phase_time(id: int, seconds: float):
+func receive_remaining_phase_time(id: int, seconds: float):
 	super.receive_remaining_phase_time(id, seconds)
 	receive_remaining_phase_time_event.emit(id, seconds)
