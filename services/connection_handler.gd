@@ -2,11 +2,13 @@ extends RpcBase
 
 class_name ConnectionHandler
 
-signal object_position_update_event(id: int, position: Vector2)
-signal object_created_event(id: int, type: String, initial_position: Vector2)
+signal object_position_update_event(id: int, position: Vector2, direction: Vector2)
+signal object_created_event(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2)
 signal object_removed_event(id: int)
+signal receive_game_state_event(active_connections: int, max_connections: int)
 
 var connected: bool = false
+var joined: bool = false
 	
 func connect_to_server(target: String):
 	print_debug("connecting to server: ", target)
@@ -41,18 +43,26 @@ func call_move_y_action(input: float):
 func call_move_action(input: Vector2):
 	rpc("move_action", input)
 
-@rpc("any_peer")
-func receive_object_position_update(id: int, position: Vector2):
-	super.receive_object_position_update(id, position)
-	object_position_update_event.emit(id, position)
+func call_join_game():
+	rpc("join_game")
+	joined = true
 
 @rpc("any_peer")
-func receive_object_created(id: int, type: String, initial_position: Vector2):
+func receive_object_position_update(id: int, position: Vector2, direction: Vector2):
+	super.receive_object_position_update(id, position, direction)
+	object_position_update_event.emit(id, position, direction)
+
+@rpc("any_peer")
+func receive_object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2):
 	super.receive_object_created(id, type, initial_position)
 	object_created_event.emit(id, type, initial_position)
-
 
 @rpc("any_peer")
 func receive_object_removed(id: int):
 	super.receive_object_removed(id)
 	object_removed_event.emit(id)
+
+@rpc("any_peer")
+func receive_game_state(active_connections: int, max_connections: int):
+	super.receive_game_state(active_connections, max_connections)
+	receive_game_state_event.emit(active_connections, max_connections)

@@ -9,3 +9,17 @@ script = ExtResource("1_yho8y")
 [node name="ConnectionHandler" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_604ly")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_right = 1153.0
+offset_bottom = 42.0
+
+[node name="Button" type="Button" parent="."]
+offset_left = 562.0
+offset_top = 255.0
+offset_right = 711.0
+offset_bottom = 296.0
+text = "Start"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
