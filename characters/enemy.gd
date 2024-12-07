@@ -11,6 +11,7 @@ var delay_for_hit: float = 1
 
 # Stats
 var hp: float = 10
+var hp_max: float = 10
 var hp_base: float = 10
 var xp: float = 1
 var att: float = 1
@@ -20,6 +21,7 @@ var enemy_phase: GamePhase.Phase = GamePhase.Phase.DAY
 
 func _ready() -> void:
 	hp = hp_base * pow(1.1, Gamemanager.get_wave() - 1)
+	hp_max = hp
 	xp = Gamemanager.get_wave()
 	att = att_base * pow(1.1, Gamemanager.get_wave() - 1)
 
@@ -31,3 +33,7 @@ func get_xp():
 
 func get_phase():
 	return enemy_phase
+	
+func _process(delta: float) -> void:
+	if $HealthBar != null:
+		$HealthBar.set_hps(hp, hp_max)

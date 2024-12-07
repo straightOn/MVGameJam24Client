@@ -1,29 +1,20 @@
 [gd_scene load_steps=4 format=3 uid="uid://0b15ggd8rhp7"]
 
 [ext_resource type="Script" path="res://characters/bug.gd" id="1_ya3b4"]
+[ext_resource type="PackedScene" uid="uid://b8sdhawq8v05u" path="res://characters/health_bar.tscn" id="2_r8u15"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_lx6li"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_oy1t8"]
-
-[node name="Bug" type="Node2D"]
+[node name="Ghost" type="Node2D"]
 script = ExtResource("1_ya3b4")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="CharacterBody2D"]
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 modulate = Color(1, 1, 0.168627, 1)
 scale = Vector2(20, 20)
 mesh = SubResource("SphereMesh_lx6li")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-shape = SubResource("CircleShape2D_oy1t8")
-
-[node name="HPLabel" type="Label" parent="CharacterBody2D"]
-offset_left = -10.0
-offset_top = -30.0
-offset_right = 10.0
-offset_bottom = -7.0
-text = "10"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="HealthBar" parent="." instance=ExtResource("2_r8u15")]
+offset_left = -20.0
+offset_top = -18.0
+offset_right = -20.0
+offset_bottom = -18.0

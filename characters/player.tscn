@@ -15,5 +15,8 @@ shape = SubResource("CircleShape2D_ijmx5")
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-20, 0, 0, -20, 20, 0, 0, 20)
 
-[node name="HealthBar2" parent="." instance=ExtResource("2_678t0")]
-position = Vector2(-20, -41)
+[node name="HealthBar" parent="." instance=ExtResource("2_678t0")]
+offset_left = -20.0
+offset_top = -41.0
+offset_right = -20.0
+offset_bottom = -41.0

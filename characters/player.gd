@@ -18,6 +18,9 @@ func move_action(direction: Vector2):
 
 func switch_phase(newPhase: GamePhase.Phase):
 	phase = newPhase
+	
+func _process(delta: float) -> void:
+	$HealthBar.set_hps(hp, maxHp)
 
 func take_damage(damage: float):
 	print_debug("TODO show damage taken")
