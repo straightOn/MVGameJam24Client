@@ -1,8 +1,23 @@
 [gd_scene load_steps=7 format=3 uid="uid://0b15ggd8rhp7"]
 
-[ext_resource type="Script" path="res://characters/bug.gd" id="1_ya3b4"]
+[ext_resource type="Script" path="res://characters/ghost.gd" id="1_mqmix"]
 [ext_resource type="PackedScene" uid="uid://b8sdhawq8v05u" path="res://characters/health_bar.tscn" id="2_r8u15"]
 [ext_resource type="Texture2D" uid="uid://5rohciavrp86" path="res://assets/Enemy/Skeleton Crew/Skeleton - Rogue/Run/Run-Sheet.png" id="3_qvodk"]
+
+[sub_resource type="Animation" id="Animation_btik2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_xpoi1"]
 resource_name = "run"
@@ -20,21 +35,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5]
 }
 
-[sub_resource type="Animation" id="Animation_btik2"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_vtdnl"]
 _data = {
 "RESET": SubResource("Animation_btik2"),
@@ -42,7 +42,7 @@ _data = {
 }
 
 [node name="Ghost" type="Node2D"]
-script = ExtResource("1_ya3b4")
+script = ExtResource("1_mqmix")
 
 [node name="HealthBar" parent="." instance=ExtResource("2_r8u15")]
 offset_left = -20.0

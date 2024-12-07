@@ -16,13 +16,6 @@ var phase: GamePhase.Phase = GamePhase.Phase.DAY
 func _ready():
 	animation_player.play("idle") 
 
-#func _physics_process(delta):
-	#move_and_slide()
-
-#func move_action(direction: Vector2):
-	#velocity = direction * SPEED
-	#print_debug("jo")
-
 func switch_phase(newPhase: GamePhase.Phase):
 	phase = newPhase
 	
@@ -46,3 +39,7 @@ func set_max_hp(maxHpNew: float):
 
 func set_remaining_time(seconds: float):
 	remaining_phase_time = seconds
+	
+func die():
+	if $Gameover:
+		$Gameover.visible = true

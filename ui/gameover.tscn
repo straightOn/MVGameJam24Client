@@ -1,0 +1,65 @@
+[gd_scene load_steps=2 format=3 uid="uid://pkp06b4r2ntr"]
+
+[ext_resource type="Script" path="res://ui/gameover.gd" id="1_syq3i"]
+
+[node name="Gameover" type="Node2D"]
+script = ExtResource("1_syq3i")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -156.5
+offset_top = -193.0
+offset_right = 156.5
+offset_bottom = 193.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="ColorRect"]
+modulate = Color(0, 0, 0, 1)
+offset_right = 313.0
+offset_bottom = 45.0
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="YouSurvived" type="Label" parent="ColorRect"]
+modulate = Color(0, 0, 0, 1)
+offset_top = 71.265
+offset_right = 313.0
+offset_bottom = 111.81
+text = "You survived"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Var" type="Label" parent="ColorRect"]
+unique_name_in_owner = true
+modulate = Color(0, 0, 0, 1)
+offset_top = 166.38
+offset_right = 313.0
+offset_bottom = 206.925
+text = "45"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Seconds" type="Label" parent="ColorRect"]
+modulate = Color(0, 0, 0, 1)
+offset_top = 265.0
+offset_right = 313.0
+offset_bottom = 305.545
+text = "Seconds"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="ColorRect"]
+layout_mode = 0
+offset_left = 30.5
+offset_top = 307.0
+offset_right = 282.5
+offset_bottom = 348.0
+text = "RESTART"
+
+[connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

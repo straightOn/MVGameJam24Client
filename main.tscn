@@ -25,12 +25,12 @@ offset_right = 644.0
 offset_bottom = 345.0
 text = "Start"
 
-[node name="Map1" parent="." instance=ExtResource("3_po3oe")]
-z_index = -1
-position = Vector2(532, -431)
-scale = Vector2(3, 3)
-
 [node name="HealthBar" parent="." instance=ExtResource("4_qrxxa")]
 physics_interpolation_mode = 0
+
+[node name="Map1" parent="." instance=ExtResource("3_po3oe")]
+z_index = -3285
+position = Vector2(532, -431)
+scale = Vector2(3, 3)
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
