@@ -17,7 +17,7 @@ func set_hps(hp_new: float, hp_max_new: float):
 	hp_max = hp_max_new
 	
 func update_fill():
-	if hp == 0:
+	if hp <= 0.0:
 		$Fill.size.x = 0
 		return
 		

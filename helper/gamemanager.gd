@@ -26,6 +26,9 @@ func _ready() -> void:
 static func game_won() -> bool:
 	return _current_wave > _max_waves
 	
+static func set_remaining_time(seconds: float):
+	_current_time = seconds
+	
 static func get_remaining_time(delta: float) -> int:
 	return 60
 	pass

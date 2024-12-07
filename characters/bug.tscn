@@ -1,17 +1,49 @@
-[gd_scene load_steps=4 format=3 uid="uid://du0cp82cdkm3g"]
+[gd_scene load_steps=7 format=3 uid="uid://du0cp82cdkm3g"]
 
 [ext_resource type="Script" path="res://characters/bug.gd" id="1_dnrfc"]
 [ext_resource type="PackedScene" uid="uid://b8sdhawq8v05u" path="res://characters/health_bar.tscn" id="2_e0acy"]
+[ext_resource type="Texture2D" uid="uid://dn8i5yeb2wnse" path="res://assets/Enemy/Orc Crew/Orc - Rogue/Run/Run-Sheet.png" id="3_t06t0"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_lx6li"]
+[sub_resource type="Animation" id="Animation_ia5s5"]
+resource_name = "run"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.133333, 0.233333, 0.366667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_4263d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wo01j"]
+_data = {
+"RESET": SubResource("Animation_4263d"),
+"run": SubResource("Animation_ia5s5")
+}
 
 [node name="Bug" type="Node2D"]
 script = ExtResource("1_dnrfc")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
-modulate = Color(1, 1, 0.168627, 1)
-scale = Vector2(20, 20)
-mesh = SubResource("SphereMesh_lx6li")
 
 [node name="HealthBar" parent="." instance=ExtResource("2_e0acy")]
 offset_left = -20.0
@@ -22,3 +54,13 @@ offset_bottom = -21.0
 [node name="DamageNumbersOrigin" type="Node2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(0, -24)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -19)
+texture = ExtResource("3_t06t0")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_wo01j")
+}

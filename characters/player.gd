@@ -1,4 +1,4 @@
-extends GameObject
+extends Node2D
 
 class_name Player
 
@@ -11,16 +11,17 @@ const GamePhase = preload("res://shared/game_phase.gd")
 var maxHp: float
 var hp: float
 var remaining_phase_time: float = 60
+var phase: GamePhase.Phase = GamePhase.Phase.DAY
 
 func _ready():
-	animation_player.play("idle")
+	animation_player.play("idle") 
 
-func _physics_process(delta):
-	move_and_slide()
+#func _physics_process(delta):
+	#move_and_slide()
 
-func move_action(direction: Vector2):
-	velocity = direction * SPEED
-	print_debug("jo")
+#func move_action(direction: Vector2):
+	#velocity = direction * SPEED
+	#print_debug("jo")
 
 func switch_phase(newPhase: GamePhase.Phase):
 	phase = newPhase
@@ -31,8 +32,6 @@ func _process(delta: float) -> void:
 	$Sprite.flip_h = Gamemanager.get_flip_char()
 
 func take_damage(damage: float):
-	print_debug("TODO show damage taken")
-	
 	var is_critical: bool = false
 	DamageNumbers.display_number(damage, damage_numbers_origin.global_position, is_critical)
 

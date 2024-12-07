@@ -23,6 +23,9 @@ func _ready() -> void:
 	hp_max = hp
 	xp = Gamemanager.get_wave()
 	att = att_base * pow(1.1, Gamemanager.get_wave() - 1)
+	
+	if $AnimationPlayer:
+		$AnimationPlayer.play("run")
 
 func get_enemy_type():
 	return enemy_type

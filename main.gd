@@ -30,6 +30,10 @@ func _ready():
 	connection_handler.receive_object_attacks_event.connect(_object_attacks)
 	connection_handler.receive_object_takes_damage_event.connect(_object_takes_damage)
 	
+	connection_handler.receive_remaining_time_event.connect(_set_remaining_wave_time)
+	connection_handler.receive_new_player_phase_event.connect(_set_player_phase)
+	connection_handler.receive_player_phase_remaining_event.connect(_set_player_phase)
+	
 	connection_handler.connect_to_server("127.0.0.1")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -159,3 +163,25 @@ func _object_takes_damage(id: int, damage: float, newHp: float):
 		object.set_hp(newHp)
 	
 	pass
+	
+func _set_remaining_wave_time(seconds: int):
+	Gamemanager.set_remaining_time(float(seconds))
+	pass
+
+func _set_player_phase(id: int, new_phase: GamePhase.Phase):
+	if (!scene_elements.has(id)):
+		return
+		
+	var player: Player = _get_player(id)
+	
+	if player:
+		player.switch_phase(new_phase)
+
+func _set_player_phase_remaining(id: int, seconds: int):
+	if (!scene_elements.has(id)):
+		return
+		
+	var player: Player = _get_player(id)
+	
+	if player:
+		player.set_remaining_time(float(seconds))

@@ -16,6 +16,9 @@ signal receive_level_up_event(id: int, level: int, newHp: float, newMaxHp: float
 signal receive_remaining_phase_time_event(id: int, seconds: float)
 signal receive_object_attacks_event(id: int, direction: Vector2)
 signal receive_object_takes_damage_event(id: int, damage: float, newHp: float)
+signal receive_remaining_time_event(seconds: int)
+signal receive_new_player_phase_event(id: int, new_phase: GamePhaseResource.Phase)
+signal receive_player_phase_remaining_event(id: int, remaining: int)
 
 var connected: bool = false
 var joined: bool = false
@@ -83,7 +86,7 @@ func receive_game_state(active_connections: int, max_connections: int):
 
 @rpc("any_peer")
 func receive_next_wave(wave: int):
-	super.receive_next_wave(wave)
+	#super.receive_next_wave(wave)
 	receive_next_wave_event.emit(wave)
 	
 @rpc("any_peer")
@@ -118,5 +121,15 @@ func receive_object_attacks(id: int, direction: Vector2):
 	
 @rpc("any_peer")
 func receive_object_takes_damage(id: int, damage: float, newHp: float):
-	super.receive_object_takes_damage(id, damage, newHp)
+	#super.receive_object_takes_damage(id, damage, newHp)
 	receive_object_takes_damage_event.emit(id, damage, newHp)
+	
+@rpc("any_peer")
+func receive_remaining_time(remaining: int):
+	#super.receive_remaining_time(remaining)
+	receive_remaining_time_event.emit(remaining)
+
+@rpc("any_peer")
+func receive_player_phase_remaining(id: int, remaining: int):
+	#super.receive_player_phase_remaining(id, remaining)
+	receive_player_phase_remaining_event.emit(id, remaining)

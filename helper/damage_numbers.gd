@@ -1,8 +1,11 @@
 extends Node
 
 func display_number(value: int, position: Vector2, is_critical: bool = false):
+	var rng = RandomNumberGenerator.new()
+	var rngArea = 15
+	
 	var number = Label.new()	
-	number.global_position = position
+	number.global_position = Vector2(rng.randf_range(position.x - rngArea, position.x + rngArea), rng.randf_range(position.y, position.y - rngArea))
 	number.text = str(value)
 	number.z_index = 5
 	number.label_settings = LabelSettings.new()
@@ -14,8 +17,12 @@ func display_number(value: int, position: Vector2, is_critical: bool = false):
 	if value == 0:
 		color = "#FFF8"
 
-	number.label_settings.font_color = color
-	number.label_settings.font_size = 18
+	var colors = ["#B22", "#2B2", "#22B", "#FFF"]
+	var random_index = randi() % colors.size()  # Generate a random index
+	var random_color = colors[random_index]    # Get the color from the list
+
+	number.label_settings.font_color = random_color
+	number.label_settings.font_size = rng.randf_range(18, 30)
 	number.label_settings.outline_color = "#000"
 	number.label_settings.outline_size = 1
 
