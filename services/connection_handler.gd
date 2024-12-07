@@ -5,13 +5,10 @@ class_name ConnectionHandler
 const GamePhase = preload("res://shared/game_phase.gd")
 
 signal object_position_update_event(id: int, position: Vector2, direction: Vector2)
-signal object_created_event(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2)
+signal object_created_event(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, name: String)
 signal object_removed_event(id: int)
 signal receive_game_state_event(active_connections: int, max_connections: int)
 signal receive_next_wave_event(wave: int)
-signal receive_switch_player_phase_event(id: int, phase: GamePhase.Phase)
-signal receive_player_takes_damage_event(id: int, damage: float, newHp: float, newMaxHp: float)
-signal receive_enemy_takes_damage_event(id: int, damage: float, newHp: float, newMaxHp: float)
 signal receive_level_up_event(id: int, level: int, newHp: float, newMaxHp: float)
 signal receive_remaining_phase_time_event(id: int, seconds: float)
 signal receive_object_attacks_event(id: int, direction: Vector2)
@@ -19,6 +16,7 @@ signal receive_object_takes_damage_event(id: int, damage: float, newHp: float)
 signal receive_remaining_time_event(seconds: int)
 signal receive_new_player_phase_event(id: int, new_phase: GamePhaseResource.Phase)
 signal receive_player_phase_remaining_event(id: int, remaining: int)
+signal receive_game_over_event(id: int, kills: int, alive_time: int)
 
 var connected: bool = false
 var joined: bool = false
@@ -56,8 +54,8 @@ func call_move_y_action(input: float):
 func call_move_action(input: Vector2):
 	rpc("move_action", input)
 
-func call_join_game():
-	rpc("join_game")
+func call_join_game(name: String):
+	rpc("join_game", name)
 	joined = true
 
 @rpc("any_peer")
@@ -66,9 +64,9 @@ func receive_object_position_update(id: int, position: Vector2, direction: Vecto
 	object_position_update_event.emit(id, position, direction)
 
 @rpc("any_peer")
-func receive_object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2):
-	super.receive_object_created(id, type, initial_position)
-	object_created_event.emit(id, type, initial_position)
+func receive_object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, name: String):
+	super.receive_object_created(id, type, initial_position, name)
+	object_created_event.emit(id, type, initial_position, name)
 
 @rpc("any_peer")
 func receive_object_removed(id: int):
@@ -90,19 +88,9 @@ func receive_next_wave(wave: int):
 	receive_next_wave_event.emit(wave)
 	
 @rpc("any_peer")
-func receive_player_takes_damage(id: int, damage: float, newHp: float, newMaxHp: float):
-	super.receive_player_takes_damage(id, damage, newHp, newMaxHp)
-	receive_player_takes_damage_event.emit(id, damage, newHp, newMaxHp)
-	
-@rpc("any_peer")
-func receive_enemy_takes_damage(id: int, damage: float, newHp: float, newMaxHp: float):
-	super.receive_enemy_takes_damage(id, damage, newHp, newMaxHp)
-	receive_enemy_takes_damage_event.emit(id, damage, newHp, newMaxHp)
-	
-@rpc("any_peer")
-func receive_switch_player_phase(id: int, phase: int):
-	super.receive_switch_player_phase(id, phase)
-	receive_switch_player_phase_event.emit(id, phase)
+func receive_new_player_phase(id: int, new_phase: GamePhaseResource.Phase ):
+	super.receive_new_player_phase(id, new_phase)
+	receive_new_player_phase_event.emit(id, new_phase)
 	
 @rpc("any_peer")
 func receive_level_up(id: int, level: int, newHp: float, newMaxHp: float):
@@ -133,3 +121,8 @@ func receive_remaining_time(remaining: int):
 func receive_player_phase_remaining(id: int, remaining: int):
 	#super.receive_player_phase_remaining(id, remaining)
 	receive_player_phase_remaining_event.emit(id, remaining)
+
+@rpc("any_peer")
+func receive_game_over(id: int, kills: int, alive_time: int):
+	super.receive_game_over(id, kills, alive_time)
+	receive_game_over_event.emit(id, kills, alive_time)

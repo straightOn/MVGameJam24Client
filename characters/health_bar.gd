@@ -20,6 +20,7 @@ func update_fill():
 	if hp <= 0.0:
 		$Fill.size.x = 0
 		return
-		
-	var health_ratio = hp / hp_max
+	var health_ratio = 1
+	if hp_max > 0:
+		health_ratio = hp / hp_max
 	$Fill.size.x = health_ratio * initial_width

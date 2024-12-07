@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var connection_handler: ConnectionHandler = %ConnectionHandler
 @onready var label: Label = %Label
+@onready var start_menu: CanvasLayer = %StartMenu
+@onready var ghost_layer: CanvasLayer = %GhostLayer
 @onready var player_resorce: Resource = preload("res://characters/player.tscn")
 @onready var bug_resource: Resource = preload("res://characters/bug.tscn")
 @onready var ghost_resource: Resource = preload("res://characters/ghost.tscn")
@@ -21,9 +23,6 @@ func _ready():
 	
 	connection_handler.receive_game_state_event.connect(_receive_game_state_event)	
 	connection_handler.receive_next_wave_event.connect(_next_wave)
-	connection_handler.receive_switch_player_phase_event.connect(_update_player_phase)
-	connection_handler.receive_player_takes_damage_event.connect(_player_takes_damage)
-	connection_handler.receive_enemy_takes_damage_event.connect(_enemy_takes_damage)
 	connection_handler.receive_level_up_event.connect(_player_levels_up)
 	connection_handler.receive_remaining_phase_time_event.connect(_set_remaining_phase_time)
 	
@@ -31,8 +30,9 @@ func _ready():
 	connection_handler.receive_object_takes_damage_event.connect(_object_takes_damage)
 	
 	connection_handler.receive_remaining_time_event.connect(_set_remaining_wave_time)
-	connection_handler.receive_new_player_phase_event.connect(_set_player_phase)
-	connection_handler.receive_player_phase_remaining_event.connect(_set_player_phase)
+	connection_handler.receive_new_player_phase_event.connect(_update_player_phase)
+	connection_handler.receive_player_phase_remaining_event.connect(_set_player_phase_remaining)
+	connection_handler.receive_game_over_event.connect(_set_player_game_over)
 	
 	connection_handler.connect_to_server("127.0.0.1")
 
@@ -51,7 +51,7 @@ func _object_position_update(id: int, new_position: Vector2, direction: Vector2)
 		return
 	scene_elements.get(id).position = new_position
 	
-func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2):		
+func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, name: String):		
 
 	if (!scene_elements.has(id)):
 		var object = null
@@ -59,6 +59,7 @@ func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_posit
 		match type:
 			ObjectTypeResource.ObjectType.Player:
 				object = player_resorce.instantiate() as Player
+				object.label = name
 			ObjectTypeResource.ObjectType.Bug:
 				object = bug_resource.instantiate() as BugEnemy
 			ObjectTypeResource.ObjectType.Ghost:
@@ -78,8 +79,8 @@ func _receive_game_state_event(active_connections: int, max_connections: int):
 	label.text = str(active_connections) + " / " + str(max_connections)
 
 func _on_button_pressed():
-	connection_handler.call_join_game()
-	$Button.visible = false
+	connection_handler.call_join_game(str(Time.get_ticks_msec()))
+	start_menu.visible = false
 
 func _next_wave(wave: int):
 	Gamemanager.set_wave(wave)
@@ -96,24 +97,9 @@ func _get_enemy(id: int):
 	pass
 
 func _update_player_phase(id: int, phase: GamePhase.Phase):
-	if (!scene_elements.has(id)):
-		return
-		
-	var player: Player = _get_player(id)
-	
-	if player:
-		player.switch_phase(phase)
-
-func _player_takes_damage(id: int, damage: float, newHp: float, newMaxHp: float):
-	if (!scene_elements.has(id)):
-		return
-		
-	var player: Player = _get_player(id)
-	
-	if player:
-		player.take_damage(damage)
-		player.set_hp(newHp)
-		player.set_max_hp(newMaxHp)
+	ghost_layer.visible = phase == GamePhase.Phase.NIGHT
+	# need to notify enemys about current phase
+	# set alpha on non current-phase enemies
 	
 func _player_levels_up(id: int, level: int, newHp: float, newMaxHp: float):
 	if (!scene_elements.has(id)):
@@ -125,15 +111,6 @@ func _player_levels_up(id: int, level: int, newHp: float, newMaxHp: float):
 		player.level_up(level)
 		player.set_hp(newHp)
 		player.set_max_hp(newMaxHp)
-	
-func _enemy_takes_damage(id: int):
-	if (!scene_elements.has(id)):
-		return
-		
-	var enemy: Enemy = _get_enemy(id)
-	
-	if enemy:
-		pass
 	
 func _set_remaining_phase_time(id: int, seconds: float):
 	if (!scene_elements.has(id)):
@@ -150,7 +127,8 @@ func _object_attacks(id: int, direction: Vector2):
 		
 	var object = scene_elements.get(id)
 	
-	pass
+	if object && object is Player:
+		(object as Player).attack(direction)
 
 func _object_takes_damage(id: int, damage: float, newHp: float):
 	if (!scene_elements.has(id)):
@@ -168,14 +146,14 @@ func _set_remaining_wave_time(seconds: int):
 	Gamemanager.set_remaining_time(float(seconds))
 	pass
 
-func _set_player_phase(id: int, new_phase: GamePhase.Phase):
+func _set_player_game_over(id: int, kills: int, alive_time: int):
 	if (!scene_elements.has(id)):
 		return
 		
 	var player: Player = _get_player(id)
 	
 	if player:
-		player.switch_phase(new_phase)
+		player.die(id, kills, alive_time)
 
 func _set_player_phase_remaining(id: int, seconds: int):
 	if (!scene_elements.has(id)):
