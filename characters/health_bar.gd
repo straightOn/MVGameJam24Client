@@ -17,5 +17,9 @@ func set_hps(hp_new: float, hp_max_new: float):
 	hp_max = hp_max_new
 	
 func update_fill():
+	if hp == 0:
+		$Fill.size.x = 0
+		return
+		
 	var health_ratio = hp / hp_max
 	$Fill.size.x = health_ratio * initial_width

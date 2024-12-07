@@ -19,7 +19,6 @@ func _ready():
 	connection_handler.object_created_event.connect(_object_created)
 	connection_handler.object_removed_event.connect(_object_removed_event)
 	
-	
 	connection_handler.receive_game_state_event.connect(_receive_game_state_event)	
 	connection_handler.receive_next_wave_event.connect(_next_wave)
 	connection_handler.receive_switch_player_phase_event.connect(_update_player_phase)
@@ -27,6 +26,9 @@ func _ready():
 	connection_handler.receive_enemy_takes_damage_event.connect(_enemy_takes_damage)
 	connection_handler.receive_level_up_event.connect(_player_levels_up)
 	connection_handler.receive_remaining_phase_time_event.connect(_set_remaining_phase_time)
+	
+	connection_handler.receive_object_attacks_event.connect(_object_attacks)
+	connection_handler.receive_object_takes_damage_event.connect(_object_takes_damage)
 	
 	connection_handler.connect_to_server("127.0.0.1")
 
@@ -37,6 +39,8 @@ func _process(delta):
 		if (direction != last_direction):
 			last_direction = direction
 			connection_handler.call_move_action(direction)
+			
+			Gamemanager.flip_char(direction.x < 0.0)
 
 func _object_position_update(id: int, new_position: Vector2, direction: Vector2):
 	if (!scene_elements.has(id)):
@@ -135,3 +139,23 @@ func _set_remaining_phase_time(id: int, seconds: float):
 
 	if player:
 		player.set_remaining_time(seconds)
+
+func _object_attacks(id: int, direction: Vector2):
+	if (!scene_elements.has(id)):
+		return
+		
+	var object = scene_elements.get(id)
+	
+	pass
+
+func _object_takes_damage(id: int, damage: float, newHp: float):
+	if (!scene_elements.has(id)):
+		return
+		
+	var object = scene_elements.get(id)
+	
+	if object is Player or object is Enemy:
+		object.take_damage(damage)
+		object.set_hp(newHp)
+	
+	pass

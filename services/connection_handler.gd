@@ -14,6 +14,8 @@ signal receive_player_takes_damage_event(id: int, damage: float, newHp: float, n
 signal receive_enemy_takes_damage_event(id: int, damage: float, newHp: float, newMaxHp: float)
 signal receive_level_up_event(id: int, level: int, newHp: float, newMaxHp: float)
 signal receive_remaining_phase_time_event(id: int, seconds: float)
+signal receive_object_attacks_event(id: int, direction: Vector2)
+signal receive_object_takes_damage_event(id: int, damage: float, newHp: float)
 
 var connected: bool = false
 var joined: bool = false
@@ -67,7 +69,7 @@ func receive_object_created(id: int, type: ObjectTypeResource.ObjectType, initia
 
 @rpc("any_peer")
 func receive_object_removed(id: int):
-	super.receive_object_removed(id)
+	#super.receive_object_removed(id)
 	object_removed_event.emit(id)
 	
 @rpc("any_peer")
@@ -108,3 +110,13 @@ func receive_level_up(id: int, level: int, newHp: float, newMaxHp: float):
 func receive_remaining_phase_time(id: int, seconds: float):
 	super.receive_remaining_phase_time(id, seconds)
 	receive_remaining_phase_time_event.emit(id, seconds)
+
+@rpc("any_peer")
+func receive_object_attacks(id: int, direction: Vector2):
+	#super.receive_object_attacks(id, direction)
+	receive_object_attacks_event.emit(id, direction)
+	
+@rpc("any_peer")
+func receive_object_takes_damage(id: int, damage: float, newHp: float):
+	super.receive_object_takes_damage(id, damage, newHp)
+	receive_object_takes_damage_event.emit(id, damage, newHp)

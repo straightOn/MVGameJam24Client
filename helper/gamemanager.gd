@@ -13,6 +13,8 @@ static var _current_time: float = _time_base;
 static var _additional_time_per_wave: float = 5
 static var _max_waves: int = 20
 
+static var _flip_char: bool = false
+
 func _ready() -> void:
 	reset_game()
 	
@@ -86,3 +88,9 @@ static func reset_game() -> void:
 	_current_status = "Idle"	
 	_enemy_dict.clear()
 	_current_time = _time_base
+
+static func flip_char(flip: bool):
+	_flip_char = flip
+	
+static func get_flip_char():
+	return _flip_char
