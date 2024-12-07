@@ -2,10 +2,18 @@ extends RpcBase
 
 class_name ConnectionHandler
 
+const GamePhase = preload("res://shared/game_phase.gd")
+
 signal object_position_update_event(id: int, position: Vector2, direction: Vector2)
 signal object_created_event(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2)
 signal object_removed_event(id: int)
 signal receive_game_state_event(active_connections: int, max_connections: int)
+signal receive_next_wave_event(wave: int)
+signal receive_switch_player_phase_event(id: int, phase: GamePhase.Phase)
+signal receive_player_takes_damage_event(id: int, damage: float, newHp: float, newMaxHp: float)
+signal receive_enemy_takes_damage_event(id: int, damage: float, newHp: float, newMaxHp: float)
+signal receive_level_up_event(id: int, level: int, newHp: float, newMaxHp: float)
+signal receive_remaining_phase_time_event(id: int, seconds: float)
 
 var connected: bool = false
 var joined: bool = false
@@ -66,3 +74,33 @@ func receive_object_removed(id: int):
 func receive_game_state(active_connections: int, max_connections: int):
 	super.receive_game_state(active_connections, max_connections)
 	receive_game_state_event.emit(active_connections, max_connections)
+
+@rpc("any_peer")
+func receive_next_wave(wave: int):
+	super.receive_next_wave(wave)
+	receive_next_wave_event.emit(wave)
+	
+@rpc("any_peer")
+func receive_player_takes_damage(id: int, damage: float, newHp: float, newMaxHp: float):
+	super.receive_player_takes_damage(id, damage, newHp, newMaxHp)
+	receive_player_takes_damage_event.emit(id, damage, newHp, newMaxHp)
+	
+@rpc("any_peer")
+func enemy_takes_damage(id: int, damage: float, newHp: float, newMaxHp: float):
+	super.receive_enemy_takes_damage(id, damage, newHp, newMaxHp)
+	receive_enemy_takes_damage_event.emit(id, damage, newHp, newMaxHp)
+	
+@rpc("any_peer")
+func switch_player_phase(id: int, phase: int):
+	super.receive_switch_player_phase(id, phase)
+	receive_switch_player_phase_event.emit(id, phase)
+	
+@rpc("any_peer")
+func level_up(id: int, level: int, newHp: float, newMaxHp: float):
+	super.receive_level_up(id, level, newHp, newMaxHp)
+	receive_level_up_event.emit(id, level, newHp, newMaxHp)
+	
+@rpc("any_peer")
+func remaining_phase_time(id: int, seconds: float):
+	super.receive_remaining_phase_time(id, seconds)
+	receive_remaining_phase_time_event.emit(id, seconds)
