@@ -2,14 +2,13 @@ extends Node2D
 
 @onready var connection_handler: ConnectionHandler = %ConnectionHandler
 @onready var label: Label = %Label
-@onready var start_menu: CanvasLayer = %StartMenu
 @onready var ghost_layer: CanvasLayer = %GhostLayer
 @onready var player_resorce: Resource = preload("res://characters/player.tscn")
 @onready var bug_resource: Resource = preload("res://characters/bug.tscn")
 @onready var ghost_resource: Resource = preload("res://characters/ghost.tscn")
-@onready var gamer_tag: TextEdit = %Gamertag
 @onready var game_over_overlay: GameOver = %Gameover
 @onready var current_wave_label: Label = %CurrentWave
+@onready var start_menu: StartMenu = %StartMenu
 
 const ObjectTypeResource = preload("res://shared/object_type.gd")
 const GamePhase = preload("res://shared/game_phase.gd")
@@ -22,6 +21,8 @@ var current_wave: int = 1
 var my_player_id: int = 0
 
 func _ready():
+	start_menu.start_game.connect(_call_join_game)
+	
 	connection_handler.object_position_update_event.connect(_object_position_update)
 	connection_handler.object_created_event.connect(_object_created)
 	connection_handler.object_removed_event.connect(_object_removed_event)
@@ -112,11 +113,10 @@ func _receive_game_state_event(peer_id: int, active_connections: int, max_connec
 	label.text = str(active_connections) + " / " + str(max_connections)
 	my_player_id = peer_id
 
-func _on_button_pressed():
+func _call_join_game():
 	for key in scene_elements.keys():
 		_object_removed_event(key)
 	connection_handler.call_join_game(str(gamer_tag.text))
-	start_menu.visible = false
 
 func _next_wave(wave: int):
 	Gamemanager.set_wave(wave)
@@ -202,7 +202,7 @@ func _set_player_game_over(id: int, kills: int, alive_time: int):
 func _set_player_phase_remaining(id: int, seconds: int):
 	if (!scene_elements.has(id)):
 		return
-		
+
 	var player: Player = _get_player(id)
 	
 	if player:
