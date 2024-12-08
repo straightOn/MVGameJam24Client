@@ -60,13 +60,6 @@ position = Vector2(715, 277)
 scale = Vector2(1.01561, 1.01172)
 texture = ExtResource("6_d3kls")
 
-[node name="Label" type="Label" parent="StartMenu"]
-offset_left = 455.0
-offset_top = 222.0
-offset_right = 683.0
-offset_bottom = 247.0
-text = "Name of an awesome game!!!"
-
 [node name="Button" type="Button" parent="StartMenu"]
 offset_left = 46.0
 offset_top = 445.0
