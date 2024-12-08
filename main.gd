@@ -28,7 +28,10 @@ func _ready():
 	connection_handler.object_created_event.connect(_object_created)
 	connection_handler.object_removed_event.connect(_object_removed_event)
 	
-	connection_handler.receive_game_state_event.connect(_receive_game_state_event)	
+	connection_handler.connection_success.connect(start_menu.connection_successful)
+	connection_handler.connection_failed.connect(start_menu.connection_failed)
+	
+	connection_handler.receive_game_state_event.connect(_receive_game_state_event)
 	connection_handler.receive_next_wave_event.connect(_next_wave)
 	connection_handler.receive_level_up_event.connect(_player_levels_up)
 	connection_handler.receive_remaining_phase_time_event.connect(_set_remaining_phase_time)

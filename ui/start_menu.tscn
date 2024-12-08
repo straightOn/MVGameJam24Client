@@ -19,10 +19,12 @@ scale = Vector2(1.01561, 1.01172)
 texture = ExtResource("1_v7wsn")
 
 [node name="Button" type="Button" parent="."]
+unique_name_in_owner = true
 offset_left = 22.0
 offset_top = 549.0
 offset_right = 373.0
 offset_bottom = 618.0
+disabled = true
 text = "Start"
 
 [node name="Gamertag" type="LineEdit" parent="."]
@@ -32,6 +34,15 @@ offset_top = 476.0
 offset_right = 359.0
 offset_bottom = 514.0
 placeholder_text = "CID"
+
+[node name="ConnectionLabel" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 4.0
+offset_top = 350.0
+offset_right = 1283.0
+offset_bottom = 373.0
+text = "CONNECTING"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="text_submitted" from="Gamertag" to="." method="_on_gamertag_text_submitted"]

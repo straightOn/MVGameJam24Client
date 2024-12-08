@@ -18,6 +18,9 @@ signal receive_new_player_phase_event(id: int, new_phase: GamePhaseResource.Phas
 signal receive_player_phase_remaining_event(id: int, remaining: int)
 signal receive_game_over_event(id: int, kills: int, alive_time: int)
 
+signal connection_success()
+signal connection_failed()
+
 var connected: bool = false
 var joined: bool = false
 
@@ -35,9 +38,11 @@ func connect_to_server(target: String):
 
 func _on_connected_to_server():
 	print_debug("connected")
+	connection_success.emit()
 	connected = true
 
 func _on_connection_failed():
+	connection_failed.emit()
 	print_debug("connection failed")
 	connected = false
 	
