@@ -14,7 +14,6 @@ shader_parameter/brightness = 1.5
 shader_parameter/ghost_color = Color(0.7, 0.9, 1, 1)
 
 [node name="Main" type="Node2D"]
-position = Vector2(67, 0)
 script = ExtResource("1_yho8y")
 
 [node name="ConnectionHandler" type="Node" parent="."]
