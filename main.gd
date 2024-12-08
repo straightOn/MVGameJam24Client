@@ -9,6 +9,8 @@ extends Node2D
 @onready var game_over_overlay: GameOver = %Gameover
 @onready var current_wave_label: Label = %CurrentWave
 @onready var start_menu: StartMenu = %StartMenu
+@onready var day_player: AudioStreamPlayer2D = %DayPlayer
+@onready var dream_player: AudioStreamPlayer2D = %DreamPlayer
 
 const ObjectTypeResource = preload("res://shared/object_type.gd")
 const GamePhase = preload("res://shared/game_phase.gd")
@@ -21,6 +23,7 @@ var current_wave: int = 1
 var my_player_id: int = 0
 
 func _ready():
+	day_player.play()
 	start_menu.start_game.connect(_call_join_game)
 	game_over_overlay.gameover_join_game_event.connect(_call_join_game)
 	
@@ -137,6 +140,12 @@ func _get_enemy(id: int):
 
 func _update_player_phase(id: int, phase: GamePhase.Phase):
 	ghost_layer.visible = phase == GamePhase.Phase.NIGHT
+	if phase == GamePhase.Phase.NIGHT:
+		dream_player.play()
+		day_player.stop()
+	else:
+		dream_player.stop()
+		day_player.play()
 	
 	var player: Player = scene_elements.get(id)
 	

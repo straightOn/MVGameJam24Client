@@ -8,6 +8,9 @@ const GamePhase = preload("res://shared/game_phase.gd")
 @onready var damage_numbers_origin = %DamageNumbersOrigin
 @onready var label_element: Label = %Label
 @onready var label_phase_timer: Label = %LabelPhaseTimer
+@onready var attack_player: AudioStreamPlayer2D = %AttackPlayer
+@onready var damage_player: AudioStreamPlayer2D = %DmgPlayer
+@onready var enemy_attack_player: AudioStreamPlayer2D = %EnemyAttackPlayer
 
 const SPEED: float = 300
 
@@ -33,6 +36,7 @@ func get_phase():
 	return current_phase
 
 func take_damage(damage: float):
+	enemy_attack_player.play()
 	var is_critical: bool = false
 	animation_player.play("get_hit")
 	animation_player.queue("idle")
@@ -51,6 +55,7 @@ func set_remaining_time(seconds: float):
 	remaining_phase_time = seconds
 	
 func attack(direction: Vector2):
+	attack_player.play()
 	animation_player.play("attack")
 	animation_player.queue("idle")
 	

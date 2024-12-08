@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bsr6l3ds6ncjb"]
+[gd_scene load_steps=10 format=3 uid="uid://bsr6l3ds6ncjb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_yho8y"]
 [ext_resource type="Script" path="res://services/connection_handler.gd" id="2_604ly"]
@@ -6,6 +6,8 @@
 [ext_resource type="Shader" path="res://ghost.gdshader" id="5_154dj"]
 [ext_resource type="PackedScene" uid="uid://pkp06b4r2ntr" path="res://ui/gameover.tscn" id="6_n3hsn"]
 [ext_resource type="PackedScene" uid="uid://tgtqllf7c74x" path="res://ui/start_menu.tscn" id="6_osfox"]
+[ext_resource type="AudioStream" uid="uid://dq52j7m6ka4li" path="res://assets/Sound/phase_day.wav" id="7_lmcn4"]
+[ext_resource type="AudioStream" uid="uid://iqx2q8pnosqj" path="res://assets/Sound/phase_dream.wav" id="8_i2bv5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfnno"]
 shader = ExtResource("5_154dj")
@@ -15,6 +17,8 @@ shader_parameter/ghost_color = Color(0.7, 0.9, 1, 1)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_yho8y")
+metadata/_edit_vertical_guides_ = [-250.0, 1800.0]
+metadata/_edit_horizontal_guides_ = [-161.0, 1016.0]
 
 [node name="ConnectionHandler" type="Node" parent="."]
 unique_name_in_owner = true
@@ -56,3 +60,12 @@ unique_name_in_owner = true
 visible = false
 z_index = 1000
 position = Vector2(502, 287)
+
+[node name="DayPlayer" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(770, 452)
+stream = ExtResource("7_lmcn4")
+
+[node name="DreamPlayer" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("8_i2bv5")
