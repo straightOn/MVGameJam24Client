@@ -7,7 +7,7 @@ signal gameover_join_game_event()
 @onready var connection_handler: ConnectionHandler = %ConnectionHandler
 
 func _on_button_pressed() -> void:
-	gameover_join_game_event.emit()
+	gameover_join_game_event.emit("noob")
 	visible = false
 
 func set_stats(seconds: int, killCount: int):

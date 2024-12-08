@@ -22,6 +22,7 @@ var my_player_id: int = 0
 
 func _ready():
 	start_menu.start_game.connect(_call_join_game)
+	game_over_overlay.gameover_join_game_event.connect(_call_join_game)
 	
 	connection_handler.object_position_update_event.connect(_object_position_update)
 	connection_handler.object_created_event.connect(_object_created)
@@ -41,8 +42,6 @@ func _ready():
 	connection_handler.receive_game_over_event.connect(_set_player_game_over)
 	
 	connection_handler.connect_to_server("127.0.0.1")
-	
-	game_over_overlay.gameover_join_game_event.connect(_call_join_game)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
