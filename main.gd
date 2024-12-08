@@ -40,6 +40,8 @@ func _ready():
 	connection_handler.receive_game_over_event.connect(_set_player_game_over)
 	
 	connection_handler.connect_to_server("127.0.0.1")
+	
+	game_over_overlay.gameover_join_game_event.connect(_on_button_pressed)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -63,7 +65,7 @@ func enemy_transparency():
 	
 	for objectId in scene_elements:
 		var object = scene_elements.get(objectId)
-		
+
 		if object is Enemy:
 			if player.get_phase() != object.get_phase():
 				object.modulate.a = 0.25
@@ -101,14 +103,18 @@ func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_posit
 
 func _object_removed_event(id: int):
 	if (scene_elements.has(id)):
-		remove_child(scene_elements.get(id))
-		scene_elements.erase(scene_elements.get(id))
+		var element = scene_elements.get(id)
+		remove_child(element)
+		scene_elements.erase(id)
+		element.queue_free()
 
 func _receive_game_state_event(peer_id: int, active_connections: int, max_connections: int):
 	label.text = str(active_connections) + " / " + str(max_connections)
 	my_player_id = peer_id
 
 func _on_button_pressed():
+	for key in scene_elements.keys():
+		_object_removed_event(key)
 	connection_handler.call_join_game(str(gamer_tag.text))
 	start_menu.visible = false
 
@@ -192,7 +198,6 @@ func _set_player_game_over(id: int, kills: int, alive_time: int):
 	
 	if player:
 		player.die(id, kills, alive_time)
-		
 
 func _set_player_phase_remaining(id: int, seconds: int):
 	if (!scene_elements.has(id)):
