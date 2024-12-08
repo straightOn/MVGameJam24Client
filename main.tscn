@@ -1,12 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bsr6l3ds6ncjb"]
+[gd_scene load_steps=8 format=3 uid="uid://bsr6l3ds6ncjb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_yho8y"]
 [ext_resource type="Script" path="res://services/connection_handler.gd" id="2_604ly"]
 [ext_resource type="PackedScene" uid="uid://q2uwqgkcvn6p" path="res://shared/maps/map1.tscn" id="3_po3oe"]
-[ext_resource type="PackedScene" uid="uid://b8sdhawq8v05u" path="res://characters/health_bar.tscn" id="4_qrxxa"]
 [ext_resource type="Shader" path="res://ghost.gdshader" id="5_154dj"]
 [ext_resource type="PackedScene" uid="uid://pkp06b4r2ntr" path="res://ui/gameover.tscn" id="6_n3hsn"]
-[ext_resource type="PackedScene" path="res://ui/start_menu.tscn" id="6_osfox"]
+[ext_resource type="PackedScene" uid="uid://tgtqllf7c74x" path="res://ui/start_menu.tscn" id="6_osfox"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfnno"]
 shader = ExtResource("5_154dj")
@@ -26,9 +25,6 @@ script = ExtResource("2_604ly")
 unique_name_in_owner = true
 offset_right = 1153.0
 offset_bottom = 42.0
-
-[node name="HealthBar" parent="." instance=ExtResource("4_qrxxa")]
-physics_interpolation_mode = 0
 
 [node name="Map1" parent="." instance=ExtResource("3_po3oe")]
 z_index = -3285
