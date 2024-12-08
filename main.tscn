@@ -32,7 +32,6 @@ physics_interpolation_mode = 0
 
 [node name="Map1" parent="." instance=ExtResource("3_po3oe")]
 z_index = -3285
-position = Vector2(-156, -13)
 
 [node name="GhostLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
