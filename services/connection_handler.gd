@@ -64,8 +64,8 @@ func receive_object_position_update(id: int, position: Vector2, direction: Vecto
 	object_position_update_event.emit(id, position, direction)
 
 @rpc("any_peer")
-func receive_object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, name: String):
-	super.receive_object_created(id, type, initial_position, name)
+func receive_object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, hp: float, max_hp: float, name: String):
+	super.receive_object_created(id, type, initial_position, hp, max_hp, name)
 	object_created_event.emit(id, type, initial_position, name)
 
 @rpc("any_peer")

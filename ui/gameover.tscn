@@ -20,6 +20,7 @@ grow_vertical = 2
 
 [node name="Label" type="Label" parent="ColorRect"]
 modulate = Color(0, 0, 0, 1)
+layout_mode = 0
 offset_right = 313.0
 offset_bottom = 45.0
 text = "GAME OVER"
@@ -28,6 +29,7 @@ vertical_alignment = 1
 
 [node name="YouSurvived" type="Label" parent="ColorRect"]
 modulate = Color(0, 0, 0, 1)
+layout_mode = 0
 offset_top = 71.265
 offset_right = 313.0
 offset_bottom = 111.81
@@ -38,6 +40,7 @@ vertical_alignment = 1
 [node name="Var" type="Label" parent="ColorRect"]
 unique_name_in_owner = true
 modulate = Color(0, 0, 0, 1)
+layout_mode = 0
 offset_top = 166.38
 offset_right = 313.0
 offset_bottom = 206.925
@@ -47,6 +50,7 @@ vertical_alignment = 1
 
 [node name="Seconds" type="Label" parent="ColorRect"]
 modulate = Color(0, 0, 0, 1)
+layout_mode = 0
 offset_top = 265.0
 offset_right = 313.0
 offset_bottom = 305.545

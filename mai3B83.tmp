@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://bsr6l3ds6ncjb"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_yho8y"]
+[ext_resource type="Script" path="res://services/connection_handler.gd" id="2_604ly"]
+[ext_resource type="PackedScene" uid="uid://q2uwqgkcvn6p" path="res://shared/maps/map1.tscn" id="3_po3oe"]
+[ext_resource type="PackedScene" uid="uid://b8sdhawq8v05u" path="res://characters/health_bar.tscn" id="4_qrxxa"]
+[ext_resource type="Shader" path="res://ghost.gdshader" id="5_154dj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kfnno"]
+shader = ExtResource("5_154dj")
+shader_parameter/ghost_intensity = 0.5
+shader_parameter/brightness = 1.5
+shader_parameter/ghost_color = Color(0.7, 0.9, 1, 1)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_yho8y")
+
+[node name="ConnectionHandler" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("2_604ly")
+
+[node name="Label" type="Label" parent="."]
+unique_name_in_owner = true
+offset_right = 1153.0
+offset_bottom = 42.0
+
+[node name="HealthBar" parent="." instance=ExtResource("4_qrxxa")]
+physics_interpolation_mode = 0
+
+[node name="Map1" parent="." instance=ExtResource("3_po3oe")]
+z_index = -3285
+position = Vector2(532, -431)
+scale = Vector2(3, 3)
+
+[node name="GhostLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="Shader" type="ColorRect" parent="GhostLayer"]
+material = SubResource("ShaderMaterial_kfnno")
+offset_left = -413.0
+offset_top = -186.0
+offset_right = 1607.0
+offset_bottom = 920.0
+
+[node name="StartMenu" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="Button" type="Button" parent="StartMenu"]
+offset_left = 495.0
+offset_top = 304.0
+offset_right = 644.0
+offset_bottom = 345.0
+text = "Start"
+
+[connection signal="pressed" from="StartMenu/Button" to="." method="_on_button_pressed"]
