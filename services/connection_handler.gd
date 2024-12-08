@@ -24,8 +24,8 @@ var joined: bool = false
 func connect_to_server(target: String):
 	print_debug("connecting to server: ", target)
 	if (!connected):
-		var peer = ENetMultiplayerPeer.new()
-		peer.create_client(target, ConnectionConstants.PORT)
+		var peer = WebSocketMultiplayerPeer.new()
+		peer.create_client(target + ':' + str(ConnectionConstants.PORT))
 		multiplayer.multiplayer_peer = peer
 		multiplayer.connected_to_server.connect(self._on_connected_to_server)
 		multiplayer.connection_failed.connect(self._on_connection_failed)
