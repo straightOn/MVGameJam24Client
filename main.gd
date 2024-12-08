@@ -42,7 +42,7 @@ func _ready():
 	
 	connection_handler.connect_to_server("127.0.0.1")
 	
-	game_over_overlay.gameover_join_game_event.connect(_on_button_pressed)
+	game_over_overlay.gameover_join_game_event.connect(_call_join_game)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -113,10 +113,10 @@ func _receive_game_state_event(peer_id: int, active_connections: int, max_connec
 	label.text = str(active_connections) + " / " + str(max_connections)
 	my_player_id = peer_id
 
-func _call_join_game():
+func _call_join_game(name: String):
 	for key in scene_elements.keys():
 		_object_removed_event(key)
-	connection_handler.call_join_game(str(gamer_tag.text))
+	connection_handler.call_join_game(name)
 
 func _next_wave(wave: int):
 	Gamemanager.set_wave(wave)
