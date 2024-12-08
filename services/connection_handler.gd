@@ -20,7 +20,7 @@ signal receive_game_over_event(id: int, kills: int, alive_time: int)
 
 var connected: bool = false
 var joined: bool = false
-	
+
 func connect_to_server(target: String):
 	print_debug("connecting to server: ", target)
 	if (!connected):
