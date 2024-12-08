@@ -40,7 +40,7 @@ func _ready():
 	connection_handler.receive_player_phase_remaining_event.connect(_set_player_phase_remaining)
 	connection_handler.receive_game_over_event.connect(_set_player_game_over)
 	
-	connection_handler.connect_to_server("127.0.0.1")
+	connection_handler.connect_to_server(ConnectionConstants.SERVER_IP)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

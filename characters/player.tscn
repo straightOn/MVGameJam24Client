@@ -189,7 +189,7 @@ position = Vector2(0, -26)
 modulate = Color(0.140447, 0.140447, 0.140447, 1)
 limit_left = -500
 limit_top = -250
-limit_right = 1500
+limit_right = 1400
 limit_bottom = 900
 limit_smoothed = true
 
