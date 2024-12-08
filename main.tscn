@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://b8sdhawq8v05u" path="res://characters/health_bar.tscn" id="4_qrxxa"]
 [ext_resource type="Shader" path="res://ghost.gdshader" id="5_154dj"]
 [ext_resource type="PackedScene" uid="uid://pkp06b4r2ntr" path="res://ui/gameover.tscn" id="6_n3hsn"]
-[ext_resource type="PackedScene" uid="uid://tgtqllf7c74x" path="res://ui/start_menu.tscn" id="6_osfox"]
+[ext_resource type="PackedScene" path="res://ui/start_menu.tscn" id="6_osfox"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfnno"]
 shader = ExtResource("5_154dj")
