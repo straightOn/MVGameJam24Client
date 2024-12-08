@@ -26,9 +26,11 @@ script = ExtResource("2_604ly")
 unique_name_in_owner = true
 offset_right = 1153.0
 offset_bottom = 42.0
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthBar" parent="." instance=ExtResource("4_qrxxa")]
 physics_interpolation_mode = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="Map1" parent="." instance=ExtResource("3_po3oe")]
 z_index = -3285
@@ -48,6 +50,34 @@ offset_bottom = 1436.0
 [node name="StartMenu" parent="." instance=ExtResource("6_osfox")]
 unique_name_in_owner = true
 
+[node name="Panel" type="Panel" parent="StartMenu"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="StartMenu/Panel"]
+position = Vector2(715, 277)
+scale = Vector2(1.01561, 1.01172)
+texture = ExtResource("6_d3kls")
+
+[node name="Button" type="Button" parent="StartMenu"]
+offset_left = 46.0
+offset_top = 445.0
+offset_right = 397.0
+offset_bottom = 514.0
+text = "Start"
+
+[node name="Gamertag" type="TextEdit" parent="StartMenu"]
+unique_name_in_owner = true
+offset_left = 51.0
+offset_top = 364.0
+offset_right = 398.0
+offset_bottom = 414.0
+theme_override_colors/background_color = Color(0, 0, 0, 0)
+placeholder_text = "Cid"
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="CurrentWave" type="Label" parent="UI"]
@@ -56,6 +86,7 @@ offset_left = 532.0
 offset_top = 2.0
 offset_right = 572.0
 offset_bottom = 25.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Gameover" parent="." instance=ExtResource("6_n3hsn")]
 unique_name_in_owner = true
