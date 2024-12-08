@@ -7,6 +7,9 @@ extends Node2D
 @onready var player_resorce: Resource = preload("res://characters/player.tscn")
 @onready var bug_resource: Resource = preload("res://characters/bug.tscn")
 @onready var ghost_resource: Resource = preload("res://characters/ghost.tscn")
+@onready var gamer_tag: TextEdit = %Gamertag
+@onready var game_over_overlay: GameOver = %Gameover
+@onready var current_wave_label: Label = %CurrentWave
 
 const ObjectTypeResource = preload("res://shared/object_type.gd")
 const GamePhase = preload("res://shared/game_phase.gd")
@@ -15,6 +18,8 @@ const GamePhase = preload("res://shared/game_phase.gd")
 #var scene_elements: Dictionary[int, GameObject] = {}
 var scene_elements: Dictionary = {}
 var last_direction: Vector2 = Vector2.ZERO
+var current_wave: int = 1
+var my_player_id: int = 0
 
 func _ready():
 	connection_handler.object_position_update_event.connect(_object_position_update)
@@ -38,6 +43,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	current_wave_label.text = "Wave: %d" % current_wave
+	
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if connection_handler.connected && connection_handler.joined:
 		if (direction != last_direction):
@@ -45,13 +52,32 @@ func _process(delta):
 			connection_handler.call_move_action(direction)
 			
 			Gamemanager.flip_char(direction.x < 0.0)
+	
+	enemy_transparency()
+			
+func enemy_transparency():
+	var player = scene_elements.get(my_player_id)
+		
+	if not player:
+		return
+	
+	for objectId in scene_elements:
+		var object = scene_elements.get(objectId)
+		
+		if object is Enemy:
+			if player.get_phase() != object.get_phase():
+				object.modulate.a = 0.25
+			else:
+				object.modulate.a = 1
+	
+	pass
 
 func _object_position_update(id: int, new_position: Vector2, direction: Vector2):
 	if (!scene_elements.has(id)):
 		return
 	scene_elements.get(id).position = new_position
 	
-func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, name: String):		
+func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, name: String, hp: int, hp_max: int):		
 
 	if (!scene_elements.has(id)):
 		var object = null
@@ -66,6 +92,9 @@ func _object_created(id: int, type: ObjectTypeResource.ObjectType, initial_posit
 				object = ghost_resource.instantiate() as Ghost
 		
 		if object != null:
+			object.set_hp(hp)
+			object.set_max_hp(hp_max)
+			
 			scene_elements[id] = object
 			scene_elements.get(id).position = initial_position
 			add_child(scene_elements.get(id))
@@ -75,11 +104,12 @@ func _object_removed_event(id: int):
 		remove_child(scene_elements.get(id))
 		scene_elements.erase(scene_elements.get(id))
 
-func _receive_game_state_event(active_connections: int, max_connections: int):
+func _receive_game_state_event(peer_id: int, active_connections: int, max_connections: int):
 	label.text = str(active_connections) + " / " + str(max_connections)
+	my_player_id = peer_id
 
 func _on_button_pressed():
-	connection_handler.call_join_game(str(Time.get_ticks_msec()))
+	connection_handler.call_join_game(str(gamer_tag.text))
 	start_menu.visible = false
 
 func _next_wave(wave: int):
@@ -98,8 +128,12 @@ func _get_enemy(id: int):
 
 func _update_player_phase(id: int, phase: GamePhase.Phase):
 	ghost_layer.visible = phase == GamePhase.Phase.NIGHT
-	# need to notify enemys about current phase
-	# set alpha on non current-phase enemies
+	
+	var player: Player = scene_elements.get(id)
+	
+	if player:
+		if player is Player:
+			player.switch_phase(phase)
 	
 func _player_levels_up(id: int, level: int, newHp: float, newMaxHp: float):
 	if (!scene_elements.has(id)):
@@ -147,6 +181,10 @@ func _set_remaining_wave_time(seconds: int):
 	pass
 
 func _set_player_game_over(id: int, kills: int, alive_time: int):
+	game_over_overlay.visible = true
+	game_over_overlay.set_stats(alive_time, kills)
+	ghost_layer.visible = false
+	
 	if (!scene_elements.has(id)):
 		return
 		
@@ -154,6 +192,7 @@ func _set_player_game_over(id: int, kills: int, alive_time: int):
 	
 	if player:
 		player.die(id, kills, alive_time)
+		
 
 func _set_player_phase_remaining(id: int, seconds: int):
 	if (!scene_elements.has(id)):

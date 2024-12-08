@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://dxijnbdo3gbpn"]
+[gd_scene load_steps=12 format=3 uid="uid://dxijnbdo3gbpn"]
 
 [ext_resource type="Script" path="res://characters/player.gd" id="1_bp4xm"]
 [ext_resource type="PackedScene" uid="uid://b8sdhawq8v05u" path="res://characters/health_bar.tscn" id="2_678t0"]
 [ext_resource type="Texture2D" uid="uid://dvwyodoppa353" path="res://assets/momonga/hero.png" id="3_o0vdu"]
+[ext_resource type="PackedScene" uid="uid://pkp06b4r2ntr" path="res://ui/gameover.tscn" id="4_25d75"]
 
 [sub_resource type="Gradient" id="Gradient_widnu"]
 
@@ -188,21 +189,16 @@ position = Vector2(0, -26)
 [node name="Camera2D" type="Camera2D" parent="."]
 modulate = Color(0.140447, 0.140447, 0.140447, 1)
 
+[node name="Gameover" parent="." instance=ExtResource("4_25d75")]
+unique_name_in_owner = true
+visible = false
+position = Vector2(2, 0)
+
 [node name="Label" type="Label" parent="."]
 unique_name_in_owner = true
-offset_left = -57.0
-offset_top = -66.0
-offset_right = 58.0
-offset_bottom = -43.0
-text = "GamertagHere
-"
-horizontal_alignment = 1
-
-[node name="LabelPhaseTimer" type="Label" parent="."]
-unique_name_in_owner = true
-offset_left = -57.0
-offset_top = -85.51
-offset_right = 58.0
-offset_bottom = -62.51
-text = "60"
+offset_left = -32.0
+offset_top = -65.0
+offset_right = 33.0
+offset_bottom = -42.0
+text = "label"
 horizontal_alignment = 1

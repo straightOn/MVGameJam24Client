@@ -37,13 +37,14 @@ text = "You survived"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Var" type="Label" parent="ColorRect"]
+[node name="SecondsAlive" type="Label" parent="ColorRect"]
 unique_name_in_owner = true
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_top = 166.38
-offset_right = 313.0
-offset_bottom = 206.925
+offset_left = 0.5
+offset_top = 112.0
+offset_right = 313.5
+offset_bottom = 152.545
 text = "45"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -51,10 +52,35 @@ vertical_alignment = 1
 [node name="Seconds" type="Label" parent="ColorRect"]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_top = 265.0
-offset_right = 313.0
-offset_bottom = 305.545
-text = "Seconds"
+offset_left = 2.5
+offset_top = 150.0
+offset_right = 315.5
+offset_bottom = 199.0
+text = "Seconds
+and killed"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Kills" type="Label" parent="ColorRect"]
+unique_name_in_owner = true
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 0.5
+offset_top = 200.47
+offset_right = 313.5
+offset_bottom = 241.015
+text = "45"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Monsters" type="Label" parent="ColorRect"]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 2.5
+offset_top = 233.355
+offset_right = 315.5
+offset_bottom = 273.9
+text = "Monsters"
 horizontal_alignment = 1
 vertical_alignment = 1
 

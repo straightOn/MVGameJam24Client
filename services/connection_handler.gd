@@ -5,9 +5,9 @@ class_name ConnectionHandler
 const GamePhase = preload("res://shared/game_phase.gd")
 
 signal object_position_update_event(id: int, position: Vector2, direction: Vector2)
-signal object_created_event(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, name: String)
+signal object_created_event(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, name: String, hp: int, hp_max: int)
 signal object_removed_event(id: int)
-signal receive_game_state_event(active_connections: int, max_connections: int)
+signal receive_game_state_event(peer_id: int, active_connections: int, max_connections: int)
 signal receive_next_wave_event(wave: int)
 signal receive_level_up_event(id: int, level: int, newHp: float, newMaxHp: float)
 signal receive_remaining_phase_time_event(id: int, seconds: float)
@@ -66,7 +66,7 @@ func receive_object_position_update(id: int, position: Vector2, direction: Vecto
 @rpc("any_peer")
 func receive_object_created(id: int, type: ObjectTypeResource.ObjectType, initial_position: Vector2, hp: float, max_hp: float, name: String):
 	super.receive_object_created(id, type, initial_position, hp, max_hp, name)
-	object_created_event.emit(id, type, initial_position, name)
+	object_created_event.emit(id, type, initial_position, name, hp, max_hp)
 
 @rpc("any_peer")
 func receive_object_removed(id: int):
@@ -78,9 +78,9 @@ func move_action(input: Vector2):
 	pass
 
 @rpc("any_peer")
-func receive_game_state(active_connections: int, max_connections: int):
-	super.receive_game_state(active_connections, max_connections)
-	receive_game_state_event.emit(active_connections, max_connections)
+func receive_game_state(peer_id: int, active_connections: int, max_connections: int):
+	super.receive_game_state(peer_id, active_connections, max_connections)
+	receive_game_state_event.emit(peer_id, active_connections, max_connections)
 
 @rpc("any_peer")
 func receive_next_wave(wave: int):

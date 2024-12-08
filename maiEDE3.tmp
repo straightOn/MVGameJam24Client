@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://bsr6l3ds6ncjb"]
+[gd_scene load_steps=8 format=3 uid="uid://bsr6l3ds6ncjb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_yho8y"]
 [ext_resource type="Script" path="res://services/connection_handler.gd" id="2_604ly"]
 [ext_resource type="PackedScene" uid="uid://q2uwqgkcvn6p" path="res://shared/maps/map1.tscn" id="3_po3oe"]
 [ext_resource type="PackedScene" uid="uid://b8sdhawq8v05u" path="res://characters/health_bar.tscn" id="4_qrxxa"]
 [ext_resource type="Shader" path="res://ghost.gdshader" id="5_154dj"]
-[ext_resource type="Texture2D" uid="uid://beuwolut4qase" path="res://assets/Fearless.png" id="6_d3kls"]
 [ext_resource type="PackedScene" uid="uid://pkp06b4r2ntr" path="res://ui/gameover.tscn" id="6_n3hsn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfnno"]
@@ -48,39 +47,19 @@ offset_bottom = 920.0
 [node name="StartMenu" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 
-[node name="Panel" type="Panel" parent="StartMenu"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="StartMenu/Panel"]
-position = Vector2(715, 277)
-scale = Vector2(1.01561, 1.01172)
-texture = ExtResource("6_d3kls")
-
-[node name="Label" type="Label" parent="StartMenu"]
-offset_left = 455.0
-offset_top = 222.0
-offset_right = 683.0
-offset_bottom = 247.0
-text = "Name of an awesome game!!!"
-
 [node name="Button" type="Button" parent="StartMenu"]
-offset_left = 46.0
-offset_top = 445.0
-offset_right = 397.0
-offset_bottom = 514.0
+offset_left = 495.0
+offset_top = 304.0
+offset_right = 644.0
+offset_bottom = 345.0
 text = "Start"
 
 [node name="Gamertag" type="TextEdit" parent="StartMenu"]
 unique_name_in_owner = true
-offset_left = 51.0
-offset_top = 364.0
-offset_right = 398.0
-offset_bottom = 414.0
-theme_override_colors/background_color = Color(0, 0, 0, 0)
+offset_left = 494.0
+offset_top = 266.0
+offset_right = 645.0
+offset_bottom = 301.0
 placeholder_text = "Cid"
 
 [node name="UI" type="CanvasLayer" parent="."]
