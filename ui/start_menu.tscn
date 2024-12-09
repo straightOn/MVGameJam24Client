@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://tgtqllf7c74x"]
+[gd_scene load_steps=9 format=3 uid="uid://tgtqllf7c74x"]
 
 [ext_resource type="Script" path="res://ui/start_menu.gd" id="1_h0xje"]
 [ext_resource type="Texture2D" uid="uid://beuwolut4qase" path="res://assets/Fearless.png" id="1_v7wsn"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://ccp0a1dchtgyf" path="res://assets/badge1.png" id="5_2hsqc"]
 [ext_resource type="Texture2D" uid="uid://c03wqf37cdn25" path="res://assets/joe.png" id="6_8h4d5"]
 [ext_resource type="Texture2D" uid="uid://r08hgn8cyv78" path="res://assets/dude.png" id="6_engd4"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_bkong"]
+font_size = 14
 
 [node name="StartMenu" type="CanvasLayer"]
 script = ExtResource("1_h0xje")
@@ -49,6 +52,7 @@ offset_top = 474.0
 offset_right = 389.0
 offset_bottom = 497.0
 text = "CONNECTING"
+label_settings = SubResource("LabelSettings_bkong")
 horizontal_alignment = 1
 autowrap_mode = 3
 
@@ -64,19 +68,11 @@ texture = ExtResource("4_vinlt")
 position = Vector2(1429, 185)
 texture = ExtResource("5_2hsqc")
 
-[node name="Passion" type="Label" parent="."]
-offset_left = 2.0
-offset_top = 757.0
-offset_right = 449.0
-offset_bottom = 780.0
-text = "MADE WITH ❤ BY"
-horizontal_alignment = 1
-
 [node name="JoeLink" type="LinkButton" parent="."]
 offset_left = 124.0
-offset_top = 778.0
+offset_top = 758.0
 offset_right = 224.0
-offset_bottom = 878.0
+offset_bottom = 858.0
 underline = 1
 uri = "http://youtube.de/@joggerjoe"
 
@@ -87,9 +83,9 @@ texture = ExtResource("6_8h4d5")
 
 [node name="DudeLink" type="LinkButton" parent="."]
 offset_left = 226.0
-offset_top = 779.0
+offset_top = 759.0
 offset_right = 326.0
-offset_bottom = 879.0
+offset_bottom = 859.0
 underline = 1
 uri = "http://youtube.de/@Pixxldude"
 
