@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://ui/gameover.gd" id="1_syq3i"]
 
 [node name="Gameover" type="Node2D"]
-position = Vector2(799, 457)
+position = Vector2(800, 450)
 script = ExtResource("1_syq3i")
 metadata/_edit_vertical_guides_ = [800.0]
-metadata/_edit_horizontal_guides_ = [450.0]
+metadata/_edit_horizontal_guides_ = [450.0, -138.0]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 modulate = Color(1, 1, 1, 0.764706)

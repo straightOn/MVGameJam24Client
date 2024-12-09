@@ -1,10 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://tgtqllf7c74x"]
+[gd_scene load_steps=8 format=3 uid="uid://tgtqllf7c74x"]
 
 [ext_resource type="Script" path="res://ui/start_menu.gd" id="1_h0xje"]
 [ext_resource type="Texture2D" uid="uid://beuwolut4qase" path="res://assets/Fearless.png" id="1_v7wsn"]
+[ext_resource type="Texture2D" uid="uid://d3kbfyarg4wye" path="res://assets/gamejam24.png" id="3_rkg8n"]
+[ext_resource type="Texture2D" uid="uid://rli0xl5sintj" path="res://assets/badge2.png" id="4_vinlt"]
+[ext_resource type="Texture2D" uid="uid://ccp0a1dchtgyf" path="res://assets/badge1.png" id="5_2hsqc"]
+[ext_resource type="Texture2D" uid="uid://c03wqf37cdn25" path="res://assets/joe.png" id="6_8h4d5"]
+[ext_resource type="Texture2D" uid="uid://r08hgn8cyv78" path="res://assets/dude.png" id="6_engd4"]
 
 [node name="StartMenu" type="CanvasLayer"]
 script = ExtResource("1_h0xje")
+metadata/_edit_vertical_guides_ = [1888.0, 225.0]
+metadata/_edit_horizontal_guides_ = [265.0, 879.0]
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 15
@@ -44,6 +51,52 @@ offset_bottom = 497.0
 text = "CONNECTING"
 horizontal_alignment = 1
 autowrap_mode = 3
+
+[node name="Gamejam24" type="Sprite2D" parent="."]
+position = Vector2(1438, 741)
+texture = ExtResource("3_rkg8n")
+
+[node name="Badge2" type="Sprite2D" parent="."]
+position = Vector2(1444, 439)
+texture = ExtResource("4_vinlt")
+
+[node name="Badge1" type="Sprite2D" parent="."]
+position = Vector2(1429, 185)
+texture = ExtResource("5_2hsqc")
+
+[node name="Passion" type="Label" parent="."]
+offset_left = 2.0
+offset_top = 757.0
+offset_right = 449.0
+offset_bottom = 780.0
+text = "MADE WITH ❤ BY"
+horizontal_alignment = 1
+
+[node name="JoeLink" type="LinkButton" parent="."]
+offset_left = 124.0
+offset_top = 778.0
+offset_right = 224.0
+offset_bottom = 878.0
+underline = 1
+uri = "http://youtube.de/@joggerjoe"
+
+[node name="Joe" type="Sprite2D" parent="JoeLink"]
+position = Vector2(53, 55)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_8h4d5")
+
+[node name="DudeLink" type="LinkButton" parent="."]
+offset_left = 226.0
+offset_top = 779.0
+offset_right = 326.0
+offset_bottom = 879.0
+underline = 1
+uri = "http://youtube.de/@joggerjoe"
+
+[node name="Dude" type="Sprite2D" parent="DudeLink"]
+position = Vector2(50, 54)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("6_engd4")
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="text_submitted" from="Gamertag" to="." method="_on_gamertag_text_submitted"]

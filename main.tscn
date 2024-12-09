@@ -157,9 +157,6 @@ offset_top = -587.0
 offset_right = 1871.0
 offset_bottom = 1436.0
 
-[node name="StartMenu" parent="." instance=ExtResource("6_osfox")]
-unique_name_in_owner = true
-
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="CurrentWave" type="Label" parent="UI"]
@@ -202,3 +199,6 @@ stream = ExtResource("8_i2bv5")
 [node name="UpdatePlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("9_ecknm")
+
+[node name="StartMenu" parent="." instance=ExtResource("6_osfox")]
+unique_name_in_owner = true
