@@ -91,7 +91,7 @@ offset_top = 779.0
 offset_right = 326.0
 offset_bottom = 879.0
 underline = 1
-uri = "http://youtube.de/@joggerjoe"
+uri = "http://youtube.de/@Pixxldude"
 
 [node name="Dude" type="Sprite2D" parent="DudeLink"]
 position = Vector2(50, 54)
