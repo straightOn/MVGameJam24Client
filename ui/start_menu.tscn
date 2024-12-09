@@ -37,12 +37,13 @@ placeholder_text = "CID"
 
 [node name="ConnectionLabel" type="Label" parent="."]
 unique_name_in_owner = true
-offset_left = 14.0
-offset_top = 485.0
-offset_right = 446.0
-offset_bottom = 508.0
+offset_left = 63.0
+offset_top = 474.0
+offset_right = 389.0
+offset_bottom = 497.0
 text = "CONNECTING"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="text_submitted" from="Gamertag" to="." method="_on_gamertag_text_submitted"]

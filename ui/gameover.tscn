@@ -3,9 +3,13 @@
 [ext_resource type="Script" path="res://ui/gameover.gd" id="1_syq3i"]
 
 [node name="Gameover" type="Node2D"]
+position = Vector2(799, 457)
 script = ExtResource("1_syq3i")
+metadata/_edit_vertical_guides_ = [800.0]
+metadata/_edit_horizontal_guides_ = [450.0]
 
 [node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0.764706)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -17,6 +21,7 @@ offset_right = 156.5
 offset_bottom = 193.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="ColorRect"]
 modulate = Color(0, 0, 0, 1)
@@ -26,6 +31,7 @@ offset_bottom = 45.0
 text = "GAME OVER"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="YouSurvived" type="Label" parent="ColorRect"]
 modulate = Color(0, 0, 0, 1)
@@ -36,6 +42,7 @@ offset_bottom = 111.81
 text = "You survived"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SecondsAlive" type="Label" parent="ColorRect"]
 unique_name_in_owner = true
@@ -48,6 +55,7 @@ offset_bottom = 152.545
 text = "45"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Seconds" type="Label" parent="ColorRect"]
 modulate = Color(0, 0, 0, 1)
@@ -60,6 +68,7 @@ text = "Seconds
 and killed"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Kills" type="Label" parent="ColorRect"]
 unique_name_in_owner = true
@@ -72,6 +81,7 @@ offset_bottom = 241.015
 text = "45"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Monsters" type="Label" parent="ColorRect"]
 modulate = Color(0, 0, 0, 1)
@@ -83,6 +93,7 @@ offset_bottom = 273.9
 text = "Monsters"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="ColorRect"]
 layout_mode = 0
@@ -91,5 +102,6 @@ offset_top = 307.0
 offset_right = 282.5
 offset_bottom = 348.0
 text = "RESTART"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="pressed" from="ColorRect/Button" to="." method="_on_button_pressed"]

@@ -1,16 +1,18 @@
 extends Node2D
 
 @onready var connection_handler: ConnectionHandler = %ConnectionHandler
-@onready var label: Label = %Label
 @onready var ghost_layer: CanvasLayer = %GhostLayer
 @onready var player_resorce: Resource = preload("res://characters/player.tscn")
 @onready var bug_resource: Resource = preload("res://characters/bug.tscn")
 @onready var ghost_resource: Resource = preload("res://characters/ghost.tscn")
 @onready var game_over_overlay: GameOver = %Gameover
 @onready var current_wave_label: Label = %CurrentWave
+@onready var current_level_label: Label = %CurrentLevel
+@onready var ui_animator: AnimationPlayer = %UiAnimator
 @onready var start_menu: StartMenu = %StartMenu
 @onready var day_player: AudioStreamPlayer2D = %DayPlayer
 @onready var dream_player: AudioStreamPlayer2D = %DreamPlayer
+@onready var update_player: AudioStreamPlayer2D = %UpdatePlayer
 
 const ObjectTypeResource = preload("res://shared/object_type.gd")
 const GamePhase = preload("res://shared/game_phase.gd")
@@ -21,6 +23,8 @@ var scene_elements: Dictionary = {}
 var last_direction: Vector2 = Vector2.ZERO
 var current_wave: int = 1
 var my_player_id: int = 0
+
+var target = "127.0.0.1"
 
 func _ready():
 	day_player.play()
@@ -47,13 +51,14 @@ func _ready():
 	connection_handler.receive_player_phase_remaining_event.connect(_set_player_phase_remaining)
 	connection_handler.receive_game_over_event.connect(_set_player_game_over)
 	
-	connection_handler.connect_to_server(ConnectionConstants.SERVER_IP)
-	#connection_handler.connect_to_server("127.0.0.1")
+	if OS.has_feature("use_server_ip"):
+		target = ConnectionConstants.SERVER_IP
+	
+	start_menu.set_target(target)
+	connection_handler.connect_to_server(target)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	current_wave_label.text = "Wave: %d" % current_wave
-	
 	var direction = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if connection_handler.connected && connection_handler.joined:
 		if (direction != last_direction):
@@ -116,7 +121,6 @@ func _object_removed_event(id: int):
 		element.queue_free()
 
 func _receive_game_state_event(peer_id: int, active_connections: int, max_connections: int):
-	label.text = str(active_connections) + " / " + str(max_connections)
 	my_player_id = peer_id
 
 func _call_join_game(name: String):
@@ -126,6 +130,9 @@ func _call_join_game(name: String):
 
 func _next_wave(wave: int):
 	Gamemanager.set_wave(wave)
+	current_wave_label.text = "Wave: %d" % wave
+	ui_animator.play("new_wave")
+	update_player.play()
 	
 func _get_player(id: int):
 	if (!scene_elements.has(id)):
@@ -163,6 +170,10 @@ func _player_levels_up(id: int, level: int, newHp: float, newMaxHp: float):
 		player.level_up(level)
 		player.set_hp(newHp)
 		player.set_max_hp(newMaxHp)
+	
+	current_level_label.text = "Level: %d" % level
+	ui_animator.play("new_level")
+	update_player.play()
 	
 func _set_remaining_phase_time(id: int, seconds: float):
 	if (!scene_elements.has(id)):

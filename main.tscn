@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bsr6l3ds6ncjb"]
+[gd_scene load_steps=17 format=3 uid="uid://bsr6l3ds6ncjb"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_yho8y"]
 [ext_resource type="Script" path="res://services/connection_handler.gd" id="2_604ly"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://tgtqllf7c74x" path="res://ui/start_menu.tscn" id="6_osfox"]
 [ext_resource type="AudioStream" uid="uid://dq52j7m6ka4li" path="res://assets/Sound/phase_day.wav" id="7_lmcn4"]
 [ext_resource type="AudioStream" uid="uid://iqx2q8pnosqj" path="res://assets/Sound/phase_dream.wav" id="8_i2bv5"]
+[ext_resource type="AudioStream" uid="uid://dhyikfofch8rf" path="res://assets/Sound/update.mp3" id="9_ecknm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfnno"]
 shader = ExtResource("5_154dj")
@@ -15,19 +16,132 @@ shader_parameter/ghost_intensity = 0.5
 shader_parameter/brightness = 1.5
 shader_parameter/ghost_color = Color(0.7, 0.9, 1, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_hkhr8"]
+font_size = 20
+
+[sub_resource type="LabelSettings" id="LabelSettings_epwi3"]
+font_size = 20
+
+[sub_resource type="Animation" id="Animation_b2b3q"]
+resource_name = "new_wave"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CurrentWave:label_settings:font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [20, 30, 20]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%CurrentWave:label_settings:font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.501961, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_k8o6u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CurrentLevel:label_settings:font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%CurrentWave:label_settings:font_size")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("%CurrentLevel:label_settings:font_color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("%CurrentWave:label_settings:font_color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_7e6l0"]
+resource_name = "new_level"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("%CurrentLevel:label_settings:font_size")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [16, 30, 20]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("%CurrentLevel:label_settings:font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 0.45098, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sl71b"]
+_data = {
+"RESET": SubResource("Animation_k8o6u"),
+"new_level": SubResource("Animation_7e6l0"),
+"new_wave": SubResource("Animation_b2b3q")
+}
+
 [node name="Main" type="Node2D"]
 script = ExtResource("1_yho8y")
-metadata/_edit_vertical_guides_ = [-250.0, 1800.0]
+metadata/_edit_vertical_guides_ = [-250.0, 1600.0, 800.0]
 metadata/_edit_horizontal_guides_ = [-161.0, 1016.0]
 
 [node name="ConnectionHandler" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("2_604ly")
-
-[node name="Label" type="Label" parent="."]
-unique_name_in_owner = true
-offset_right = 1153.0
-offset_bottom = 42.0
 
 [node name="Map1" parent="." instance=ExtResource("3_po3oe")]
 z_index = -3285
@@ -50,16 +164,31 @@ unique_name_in_owner = true
 
 [node name="CurrentWave" type="Label" parent="UI"]
 unique_name_in_owner = true
-offset_left = 532.0
-offset_top = 2.0
-offset_right = 572.0
-offset_bottom = 25.0
+offset_right = 1600.0
+offset_bottom = 30.0
+text = "Wave Label"
+label_settings = SubResource("LabelSettings_hkhr8")
+horizontal_alignment = 1
+
+[node name="CurrentLevel" type="Label" parent="UI"]
+unique_name_in_owner = true
+offset_top = 60.0
+offset_right = 1600.0
+offset_bottom = 90.0
+text = "Level Label"
+label_settings = SubResource("LabelSettings_epwi3")
+horizontal_alignment = 1
+
+[node name="UiAnimator" type="AnimationPlayer" parent="UI"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_sl71b")
+}
 
 [node name="Gameover" parent="." instance=ExtResource("6_n3hsn")]
 unique_name_in_owner = true
 visible = false
 z_index = 1000
-position = Vector2(502, 287)
 
 [node name="DayPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
@@ -69,3 +198,7 @@ stream = ExtResource("7_lmcn4")
 [node name="DreamPlayer" type="AudioStreamPlayer2D" parent="."]
 unique_name_in_owner = true
 stream = ExtResource("8_i2bv5")
+
+[node name="UpdatePlayer" type="AudioStreamPlayer2D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("9_ecknm")
